@@ -32,6 +32,8 @@ DeviceAddress site1 = {0x28, 0x33, 0x3C, 0x21, 0x05, 0x00, 0x00, 0xC5};
 DeviceAddress site2 = {0x28, 0x8D, 0xB4, 0x20, 0x05, 0x00, 0x00, 0xAB};
 DeviceAddress site3 = {0x28, 0x51, 0xFD, 0x20, 0x05, 0x00, 0x00, 0x08};
 DeviceAddress site4 = {0x28, 0x6F, 0x40, 0x21, 0x05, 0x00, 0x00, 0xDA};
+DeviceAddress ambient = {0x28, 0xFF, 0x21, 0x27, 0x71, 0x15, 0x01, 0x82};
+
 
 bool hot0 = false;
 bool hot1 = false;
@@ -43,7 +45,7 @@ bool irreversible_hot = false;
 
 int buttonState = 0;
 
-float t0, t1, t2, t3, t4;
+float t0, t1, t2, t3, t4, t5;
 
 void setup(void)
 {
@@ -103,6 +105,7 @@ void loop(void)
   t2 = sensors.getTempC(site2);
   t3 = sensors.getTempC(site3);
   t4 = sensors.getTempC(site4);
+  t5 = sensors.getTempC(ambient);
 
   if (t0>THRESHOLD){
     hot0 = true;
@@ -164,6 +167,8 @@ void loop(void)
   Serial.print(t3); 
   Serial.print(", 4, ");
   Serial.print(t4); 
+  Serial.print(", Ambient, ");
+  Serial.print(t5); 
     
   Serial.println();
   
