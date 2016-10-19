@@ -13,8 +13,8 @@
 #define BUTTON 4
 #define LED 5
 #define LEDDEAD 6
-#define THRESHOLD 19.0
-#define HYST 0.1
+#define THRESHOLD 30  
+#define HYST 5
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -78,6 +78,17 @@ void printAddress(DeviceAddress deviceAddress)
   digitalWrite(LED, LOW);
 }
 
+void compare(float t, float amb, bool *hot)
+{
+  float delta;
+
+  delta = (t - amb);
+
+  if (delta > THRESHOLD) *hot = true;
+  if (delta < THRESHOLD-HYST) *hot = false;
+  
+}
+
 void loop(void)
 { 
   // call sensors.requestTemperatures() to issue a global temperature 
@@ -107,37 +118,11 @@ void loop(void)
   t4 = sensors.getTempC(site4);
   t5 = sensors.getTempC(ambient);
 
-  if (t0>THRESHOLD){
-    hot0 = true;
-  }
-  if (t1>THRESHOLD){
-    hot1 = true;
-  }
-  if (t2>THRESHOLD){
-    hot2 = true;
-  }
-  if (t3>THRESHOLD){
-    hot3 = true;
-  }
-  if (t4>THRESHOLD){
-    hot4 = true;
-  }
-
-  if (t0<THRESHOLD-HYST){
-    hot0 = false;
-  }
-  if (t1<THRESHOLD-HYST){
-    hot1 = false;
-  }
-  if (t2<THRESHOLD-HYST){
-    hot2 = false;
-  }
-  if (t3<THRESHOLD-HYST){
-    hot3 = false;
-  }
-  if (t4<THRESHOLD-HYST){
-    hot4 = false;
-  }     
+  compare(t0, t5, &hot0);
+  compare(t1, t5, &hot1);
+  compare(t2, t5, &hot2);
+  compare(t3, t5, &hot3);
+  compare(t4, t5, &hot4);
    
   if (hot0||hot1||hot2||hot3||hot4){
     digitalWrite(LED, LOW);
