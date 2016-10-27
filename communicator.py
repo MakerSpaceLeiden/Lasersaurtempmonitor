@@ -21,6 +21,6 @@ class Communicator(object):
         self.serial.close()
 
 if __name__ == "__main__":
-    instance = Communicator("hostname")
+    instance = Communicator("space.makerspaceleiden.nl")
     instance.loop()
     instance.stop()
