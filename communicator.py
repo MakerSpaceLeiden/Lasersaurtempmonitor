@@ -8,6 +8,7 @@ class Communicator(object):
         self.serial = serial.Serial(port = "/dev/ttyACM0", baudrate=9600)
         self.serial.close()
         self.serial.open()
+        self.serial.flushInput()
         self.host = host
 
     def loop(self):
