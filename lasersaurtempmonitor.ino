@@ -13,7 +13,7 @@
 #define BUTTON 4
 #define LED 5
 #define LEDDEAD 6
-#define THRESHOLD 30  
+#define THRESHOLD 45
 #define HYST 5
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
@@ -140,7 +140,7 @@ void loop(void)
     digitalWrite(LEDDEAD, LOW);
   }
   
-
+  delayMicroseconds(1000);
   Serial.print("0, ");
   //Serial.print(sensors.getTempCByIndex(0)); // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
   Serial.print(t0); // Why "byIndex"? You can have more than one IC on the same bus. 0 refers to the first IC on the wire
