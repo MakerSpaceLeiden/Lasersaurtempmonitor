@@ -13,8 +13,9 @@ class Communicator(object):
     def loop(self):
         while True:
             line = self.serial.readline()
+            line = str(time.clock()) + ',' + line
             publish.single("lasersaurtemp", line, hostname=self.host)
-            time.sleep(10)
+            time.sleep(2)
 
     def stop(self):
         self.serial.close()
