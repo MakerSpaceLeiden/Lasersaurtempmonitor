@@ -4,6 +4,11 @@
   
 // using the promicro...
 
+// pin 5 is connected to the relay through an GP NPN transistor, ie BC547
+// so setting the pin LOW will OPEN the loop and DISABLE laser
+//    setting the pin HIGH will CLOSE the loop an ENABLE laser
+
+
 // http://www.milesburton.com/?title=Dallas_Temperature_Control_Library#Download
 // http://www.hobbytronics.co.uk/ds18b20-arduino
 
@@ -11,7 +16,7 @@
 #define ONE_WIRE_BUS 10  
 #define TEMPERATURE_PRECISION 9
 #define BUTTON 4
-#define LED 5
+#define RELAY 5
 #define LEDDEAD 6
 #define THRESHOLD 45
 #define HYST 5
@@ -60,7 +65,7 @@ void setup(void)
   //present0 = sensors.getAddress(site0, 0);
 
   pinMode(BUTTON, INPUT);
-  pinMode(LED, OUTPUT);
+  pinMode(RELAY, OUTPUT);
   pinMode(LEDDEAD, OUTPUT);
 }
 
@@ -125,11 +130,11 @@ void loop(void)
   compare(t4, t5, &hot4);
    
   if (hot0||hot1||hot2||hot3||hot4){
-    digitalWrite(LED, LOW);
+    digitalWrite(RELAY, LOW);
     irreversible_hot = true;
   }
   else{
-    digitalWrite(LED, HIGH);
+    digitalWrite(RELAY, HIGH);
   }
 
   if (irreversible_hot){
