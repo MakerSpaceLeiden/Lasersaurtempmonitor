@@ -15,6 +15,7 @@ class Communicator(object):
         while True:
             line = self.serial.readline()
             line = str(time.clock()) + ',' + line
+            #makerspace/temp/lasersaur
             publish.single("lasersaurtemp", line, hostname=self.host)
             time.sleep(1)
 
